@@ -1,0 +1,38 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.4
+
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 18
+
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Style/SymbolArray:
+  Enabled: true
+
+RSpec/NestedGroups:
+  Max: 5
