@@ -1,4 +1,5 @@
 # Zerobounce
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_shield)
 
 A ruby client for Zerobounce.net API.
 
@@ -53,6 +54,8 @@ to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 The gem is available as open source under the terms of the
 [MIT License](https://opensource.org/licenses/MIT).
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_large)
 
 ## Code of Conduct
 
