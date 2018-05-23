@@ -1,5 +1,6 @@
 # Zerobounce
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_shield)
+[![Gem Version](https://badge.fury.io/rb/zerobounce.svg)](https://badge.fury.io/rb/zerobounce)
 
 A ruby client for Zerobounce.net API.
 
