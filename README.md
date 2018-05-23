@@ -1,4 +1,6 @@
 # Zerobounce
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_shield)
+
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/zerobounce`. To experiment with that code, run `bin/console` for an interactive prompt.
 
@@ -44,6 +46,9 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_large)
 
 ## Code of Conduct
 
