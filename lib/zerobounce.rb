@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require 'zerobounce/error'
 require 'zerobounce/version'
 require 'zerobounce/request'
 require 'zerobounce/response'
 require 'zerobounce/configuration'
 
+# Validate an email address with Zerobounce.net
 module Zerobounce
   class << self
     attr_writer :configuration
@@ -21,7 +23,7 @@ module Zerobounce
     #
     # @example
     #   Zerobounce.configure do |config|
-    #     config.key = 'api-key'
+    #     config.api_key = 'api-key'
     #   end
     #
     # @yieldparam [Zerobounce::Configuration] config
@@ -29,6 +31,8 @@ module Zerobounce
       yield configuration
     end
 
+    # Validate an email address and/or IP address.
+    #
     # @param [Hash] params
     # @return [Zerobounce::Response]
     def validate(params)

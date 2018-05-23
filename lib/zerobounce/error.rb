@@ -3,16 +3,20 @@
 require 'json'
 
 module Zerobounce
+  # The base Zerobounce error.
   class Error < StandardError
     def initialize(env=nil)
       @env = env
     end
 
+    # Message for the error.
     def message
       @env[:body]
     end
 
     class << self
+      # @param [Hash] env
+      # @return [Error]
       def from_response(env)
         case env[:status]
         when 500
@@ -40,13 +44,17 @@ module Zerobounce
     end
   end
 
+  # Server returned a 500 error.
   class InternalServerError < Error
   end
 
+  # A parameter was missing, usually the apiKey.
   class MissingParameter < Error
   end
 
+  # General API error, the response code was 200 but an error still occurred.
   class ApiError < Error
+    # @see #message
     def message
       JSON.parse(@env[:body])['error']
     end
