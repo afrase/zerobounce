@@ -5,8 +5,13 @@ require 'time'
 module Zerobounce
   # A Zerobounce response
   #
+  # @author Aaron Frase
+  #
   # @attr_reader [Zerobounce::Request] request
+  #   The request instance.
+  #
   # @attr_reader [Faraday::Response] response
+  #   The original {https://www.rubydoc.info/gems/faraday/0.15.2/Faraday/Response Faraday::Response}
   class Response
     attr_reader :response
     attr_reader :request
@@ -30,17 +35,36 @@ module Zerobounce
     #   :abuse
     #   :do_not_mail
     #
-    # @return [Symbol]
+    # @return [Symbol] The status as a +Symbol+.
     def status
       @status ||= underscore(@body[:status])&.to_sym
     end
 
-    # antispam_system | greylisted | mail_server_temporary_error | forcible_disconnect | mail_server_did_not_respond |
-    # timeout_exceeded | failed_smtp_connection | mailbox_quota_exceeded | exception_occurred | possible_traps |
-    # role_based | global_suppression | mailbox_not_found | no_dns_entries | failed_syntax_check | possible_typo |
-    # unroutable_ip_address | leading_period_removed | does_not_accept_mail | alias_address
+    # A more detailed status
     #
-    # @return [Symbol]
+    # Possible values:
+    #   :antispam_system
+    #   :greylisted
+    #   :mail_server_temporary_error
+    #   :forcible_disconnect
+    #   :mail_server_did_not_respond
+    #   :timeout_exceeded
+    #   :failed_smtp_connection
+    #   :mailbox_quota_exceeded
+    #   :exception_occurred
+    #   :possible_traps
+    #   :role_based
+    #   :global_suppression
+    #   :mailbox_not_found
+    #   :no_dns_entries
+    #   :failed_syntax_check
+    #   :possible_typo
+    #   :unroutable_ip_address
+    #   :leading_period_removed
+    #   :does_not_accept_mail
+    #   :alias_address
+    #
+    # @return [Symbol] The sub_status as a +Symbol+.
     def sub_status
       @sub_status ||= underscore(@body[:sub_status])&.to_sym
     end
@@ -124,12 +148,14 @@ module Zerobounce
 
     # Is this email considered valid?
     #
+    # @note Uses the values from {Zerobounce::Configuration#valid_statuses}
+    #
     # @return [Boolean]
     def valid?
       @valid ||= Zerobounce.config.valid_statuses.include?(status)
     end
 
-    # The opposite of #valid?
+    # The opposite of {#valid?}
     #
     # @return [Boolean]
     def invalid?
@@ -141,7 +167,7 @@ module Zerobounce
     # These are temporary emails created for the sole purpose to sign up to websites without giving their real
     # email address. These emails are short lived from 15 minutes to around 6 months.
     #
-    # @note If you have valid emails with this flag set to `true`, you shouldn't email them.
+    # @note If you have valid emails with this flag set to +true+, you shouldn't email them.
     #
     # @return [Boolean]
     def disposable?
@@ -171,12 +197,17 @@ module Zerobounce
       @creation_date ||= @body[:creationdate] && Time.parse(@body[:creationdate])
     end
 
+    # Returns a string containing a human-readable representation.
+    #
+    # @note Overriding inspect to hide the {#request}/{#response} instance variables
+    #
     # @return [String]
     def inspect
-      # Overriding inspect to hide the @request/@response instance variables
       "#<#{self.class.name}:#{object_id}>"
     end
 
+    # Convert to a hash.
+    #
     # @return [Hash]
     def to_h
       public_methods(false).each_with_object({}) do |meth, memo|

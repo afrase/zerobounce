@@ -6,6 +6,26 @@ require 'zerobounce/middleware/raise_error'
 
 module Zerobounce
   # Configuration object for Zerobounce.
+  #
+  # @author Aaron Frase
+  #
+  # @attr [String] host
+  #   The Zerobounce API host.
+  #
+  # @attr [Hash] headers
+  #   Headers to use in all requests.
+  #
+  # @attr [String] api_key
+  #   A Zerobounce API key.
+  #
+  # @attr [Proc] middleware
+  #   The middleware used by Faraday for each request.
+  #
+  #   @note If you modify the default make sure to add middleware to parse
+  #     the response as json and symbolize the keys.
+  #
+  # @attr [Array<Symbol>] valid_statues
+  #   The statuses that are considered valid by {Response#valid?}.
   class Configuration
     attr_accessor :host
     attr_accessor :headers

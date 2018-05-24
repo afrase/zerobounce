@@ -8,6 +8,7 @@ require 'zerobounce/configuration'
 
 # Validate an email address with Zerobounce.net
 module Zerobounce
+  # @author Aaron Frase
   class << self
     attr_writer :configuration
 

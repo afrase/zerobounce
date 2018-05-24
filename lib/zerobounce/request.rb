@@ -7,10 +7,17 @@ module Zerobounce
   #
   # @author Aaron Frase
   #
-  # @attr_reader [String] url The path of the request.
-  # @attr_reader [String] host The host to send the request to.
-  # @attr_reader [Hash] headers The headers used for the request.
-  # @attr_reader [Proc] middleware Faraday middleware used for the request.
+  # @attr_reader [String] url
+  #   The path of the request.
+  #
+  # @attr_reader [String] host
+  #   The host to send the request to.
+  #
+  # @attr_reader [Hash] headers
+  #   The headers used for the request.
+  #
+  # @attr_reader [Proc] middleware
+  #   Faraday middleware used for the request.
   class Request
     attr_reader :url
     attr_reader :host
@@ -40,7 +47,7 @@ module Zerobounce
 
     # @return [Faraday::Connection]
     def conn
-      @conn ||= Faraday.new(server, headers: headers, &middleware)
+      @conn ||= Faraday.new(host, headers: headers, &middleware)
     end
 
     # @param [Hash] params

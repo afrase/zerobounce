@@ -1,4 +1,6 @@
 # Zerobounce
+[![Maintainability](https://api.codeclimate.com/v1/badges/35879ed0fe903e15175e/maintainability)](https://codeclimate.com/github/afrase/zerobounce/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/35879ed0fe903e15175e/test_coverage)](https://codeclimate.com/github/afrase/zerobounce/test_coverage)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fafrase%2Fzerobounce?ref=badge_shield)
 [![Gem Version](https://badge.fury.io/rb/zerobounce.svg)](https://badge.fury.io/rb/zerobounce)
 

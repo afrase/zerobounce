@@ -4,7 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zerobounce/version'
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable BlockLength
   spec.name          = 'zerobounce'
   spec.version       = Zerobounce::VERSION
   spec.authors       = ['Aaron Frase']
@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.metadata['yard.run'] = 'yri' # use "yard" to build full HTML docs.
+
   spec.add_dependency 'faraday', '~> 0.14'
   spec.add_dependency 'faraday_middleware', '~> 0.12'
 
@@ -29,7 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.11.3'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rspec_junit_formatter', '~> 0.3.0'
   spec.add_development_dependency 'rubocop', '~> 0.52'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.22', '>= 1.22.2'
+  spec.add_development_dependency 'simplecov', '~> 0.16.1'
   spec.add_development_dependency 'yard', '~> 0.9.12'
 end
