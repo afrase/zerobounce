@@ -24,5 +24,17 @@ RSpec.describe Zerobounce do
     end
   end
 
-  describe '.validate'
+  describe '.validate' do
+    before do
+      described_class.config.middleware = proc do |f|
+        f.adapter(:test) do |stub|
+          stub.get('/v1/validate') { |_| [200, {}, ''] }
+        end
+      end
+    end
+
+    it 'returns a response' do
+      expect(described_class.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
+    end
+  end
 end

@@ -19,6 +19,11 @@ module Zerobounce
   # @attr_reader [Proc] middleware
   #   Faraday middleware used for the request.
   class Request
+    # The normal email validation endpoint.
+    VALIDATE_PATH = '/v1/validate'
+    # The validation endpoint for email and IP validation.
+    VALIDATE_WITH_IP_PATH = '/v1/validatewithip'
+
     attr_reader :url
     attr_reader :host
     attr_reader :headers
@@ -28,11 +33,11 @@ module Zerobounce
     # @option params [String] :middleware default: {Configuration#middleware} {include:#middleware}
     # @option params [String] :headers default: {Configuration#headers} {include:#headers}
     # @option params [String] :host default: {Configuration#host} {include:#host}
-    def initialize(params)
+    def initialize(params={})
       @middleware = params[:middleware] || Zerobounce.config.middleware
       @headers = params[:headers] || Zerobounce.config.headers
       @host = params[:host] || Zerobounce.config.host
-      @url = params.key?(:ipaddress) || params.key?(:ip_address) ? '/v1/validatewithip' : '/v1/validate'
+      @url = params.key?(:ipaddress) || params.key?(:ip_address) ? VALIDATE_WITH_IP_PATH : VALIDATE_PATH
     end
 
     # Sends a GET request.

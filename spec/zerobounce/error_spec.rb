@@ -34,4 +34,23 @@ RSpec.describe Zerobounce::Error do
       end
     end
   end
+
+  describe '#message' do
+    context 'when status is 500' do
+      let(:env) { { status: 500, body: 'error' } }
+
+      it 'uses the body for the message' do
+        expect(described_class.from_response(env).message).to eq('error')
+      end
+    end
+
+    context 'when body looks like an error' do
+      let(:error_message) { 'Invalid API Key or your account ran out of credits' }
+      let(:env) { { status: 200, body: JSON.dump(error: error_message) } }
+
+      it 'parses the json to get error message' do
+        expect(described_class.from_response(env).message).to eq(error_message)
+      end
+    end
+  end
 end
