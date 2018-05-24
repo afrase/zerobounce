@@ -63,7 +63,7 @@ jobs:
 
   run-specs:
     <<: *defaults
-    parallelism: 4
+    parallelism: 2
     steps:
       - *restore_repo
       - *attach_workspace
@@ -85,7 +85,7 @@ jobs:
       - persist_to_workspace:
           root: *workspace_root
           paths:
-            - tmp/codeclimate.${CIRCLE_NODE_INDEX}.json
+            - tmp
       - store_test_results:
           path: test_results
       - store_artifacts:
