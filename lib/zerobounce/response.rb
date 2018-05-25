@@ -211,7 +211,7 @@ module Zerobounce
     # @return [Hash]
     def to_h
       public_methods(false).each_with_object({}) do |meth, memo|
-        next if %i[request response inspect to_json to_h].include?(meth)
+        next if %i[request response inspect to_h].include?(meth)
         memo[meth] = send(meth)
       end
     end
@@ -222,9 +222,7 @@ module Zerobounce
     # @return [String, nil]
     def underscore(word)
       return if word.nil? || word.empty?
-      word.gsub!(/([A-Z\d]+)([A-Z][a-z])/, '\1_\2') # for words like HTTPResponse => HTTP_Response
-      word.gsub!(/([a-z\d])([A-Z])/, '\1_\2') # for words like ResponseCode Response_Code
-      word.downcase.tr('-', '_')
+      word.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase.tr('-', '_')
     end
   end
 end
