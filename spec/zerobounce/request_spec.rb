@@ -73,20 +73,20 @@ RSpec.describe Zerobounce::Request do
 
     it 'filters extra params' do
       described_class.new.get(foo: 'foo', bar: 'bar')
-      expect(faraday_conn).to have_received(:get).with(String, apiKey: nil)
+      expect(faraday_conn).to have_received(:get).with(String, apikey: nil)
     end
 
-    context 'when given an apiKey' do
+    context 'when given an apikey' do
       it 'uses it instead of Zerobounce::Configuration#api_key' do
-        described_class.new.get(apiKey: 'foo')
-        expect(faraday_conn).to have_received(:get).with(String, apiKey: 'foo')
+        described_class.new.get(apikey: 'foo')
+        expect(faraday_conn).to have_received(:get).with(String, apikey: 'foo')
       end
     end
 
     context 'when given ip_address' do
       it 'normalizes it to ipaddress' do
         described_class.new.get(ip_address: '127.0.0.1')
-        expect(faraday_conn).to have_received(:get).with(String, apiKey: nil, ipaddress: '127.0.0.1')
+        expect(faraday_conn).to have_received(:get).with(String, apikey: nil, ipaddress: '127.0.0.1')
       end
     end
   end
