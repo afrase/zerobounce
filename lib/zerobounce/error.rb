@@ -60,7 +60,7 @@ module Zerobounce
   class InternalServerError < Error
   end
 
-  # A parameter was missing, usually the apiKey.
+  # A parameter was missing, usually the apikey.
   #
   # @author Aaron Frase
   class MissingParameter < Error

@@ -58,9 +58,9 @@ module Zerobounce
     # @param [Hash] params
     # @return [Hash]
     def get_params(params)
-      valid_params = %i[apiKey ipaddress email]
+      valid_params = %i[apikey ipaddress email]
       params[:ipaddress] = params.delete(:ip_address) if params.key?(:ip_address) # normalize ipaddress key
-      { apiKey: Zerobounce.config.api_key }.merge(params.select { |k, _| valid_params.include?(k) })
+      { apikey: Zerobounce.config.api_key }.merge(params.select { |k, _| valid_params.include?(k) })
     end
   end
 end
