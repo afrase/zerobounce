@@ -2,5 +2,5 @@
 
 module Zerobounce
   # The version of the gem.
-  VERSION = '0.0.5'
+  VERSION = '0.0.6'
 end
