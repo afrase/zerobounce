@@ -15,7 +15,7 @@ module Zerobounce
   # @attr [Hash] headers
   #   Headers to use in all requests.
   #
-  # @attr [String] api_key
+  # @attr [String] apikey
   #   A Zerobounce API key.
   #
   # @attr [Proc] middleware
@@ -29,13 +29,13 @@ module Zerobounce
   class Configuration
     attr_accessor :host
     attr_accessor :headers
-    attr_accessor :api_key
+    attr_accessor :apikey
     attr_accessor :middleware
     attr_accessor :valid_statuses
 
     def initialize
       self.host = 'https://api.zerobounce.net'
-      self.api_key = ENV['ZEROBOUNCE_API_KEY']
+      self.apikey = ENV['ZEROBOUNCE_API_KEY']
       self.valid_statuses = %i[valid catch_all]
       self.headers = { user_agent: "ZerobounceRubyGem/#{Zerobounce::VERSION}" }
 

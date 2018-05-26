@@ -27,7 +27,7 @@ Or install it yourself as:
 ```ruby
 # Configure the client
 Zerobounce.configure do |config|
-  config.api_key = 'key'
+  config.apikey = 'key'
   config.valid_statuses = [:valid, :catch_all, :unknown]
 end
 
