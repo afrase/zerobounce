@@ -6,15 +6,15 @@ RSpec.describe Zerobounce do
   end
 
   describe '.configure' do
-    let(:api_key) { [*('a'..'z')].sample(32).join }
+    let(:apikey) { [*('a'..'z')].sample(32).join }
 
     it 'yields the configuration' do
       expect { |b| described_class.configure(&b) }.to yield_with_args(Zerobounce::Configuration)
     end
 
     it 'sets the api key in configure block' do
-      described_class.configure { |config| config.api_key = api_key }
-      expect(described_class.configuration.api_key).to eq(api_key)
+      described_class.configure { |config| config.apikey = apikey }
+      expect(described_class.configuration.apikey).to eq(apikey)
     end
   end
 

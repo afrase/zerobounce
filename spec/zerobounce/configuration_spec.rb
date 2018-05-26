@@ -3,15 +3,15 @@
 RSpec.describe Zerobounce::Configuration do
   it 'has correct attributes' do
     expect(described_class.new).to have_attributes(
-      api_key: be_nil, host: be_a(String), headers: be_a(Hash), middleware: be_a(Proc), valid_statuses: be_an(Array)
+      apikey: be_nil, host: be_a(String), headers: be_a(Hash), middleware: be_a(Proc), valid_statuses: be_an(Array)
     )
   end
 
-  describe '#api_key', mock_env: true do
+  describe '#apikey', mock_env: true do
     before { ENV['ZEROBOUNCE_API_KEY'] = 'foobar' }
 
     it 'uses the environment variable "ZEROBOUNCE_API_KEY" by default' do
-      expect(described_class.new.api_key).to eq('foobar')
+      expect(described_class.new.apikey).to eq('foobar')
     end
   end
 

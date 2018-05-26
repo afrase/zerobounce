@@ -24,7 +24,7 @@ module Zerobounce
     #
     # @example
     #   Zerobounce.configure do |config|
-    #     config.api_key = 'api-key'
+    #     config.apikey = 'api-key'
     #   end
     #
     # @yieldparam [Zerobounce::Configuration] config
