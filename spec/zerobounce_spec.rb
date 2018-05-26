@@ -62,6 +62,22 @@ RSpec.describe Zerobounce do
     end
   end
 
+  describe '.invalid?' do
+    let(:response) { instance_spy(Zerobounce::Response) }
+
+    before do
+      allow(response).to receive(:invalid?).and_return(false)
+      req = instance_double(Zerobounce::Request)
+      allow(Zerobounce::Request).to receive(:new).and_return(req)
+      allow(req).to receive(:validate).and_return(response)
+    end
+
+    it 'calls #valid? on response' do
+      described_class.invalid?('user@example.com')
+      expect(response).to have_received(:invalid?)
+    end
+  end
+
   describe '.credits' do
     let(:request) { instance_spy(Zerobounce::Request) }
 

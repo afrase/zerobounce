@@ -35,12 +35,12 @@ module Zerobounce
     # Validates the email address and gets geoip information for an IP if provided.
     #
     # @param [Hash] params
-    # @option params [String] :email
-    # @option params [String] :ip_address An IP address. :ipaddress also works.
-    # @option params [String] :apikey
-    # @option params [String] :host
-    # @option params [String] :headers
-    # @option params [Proc] :middleware
+    # @option params [String] :email The email address to validate.
+    # @option params [String] :ip_address An IP address, :ipaddress also works.
+    # @option params [String] :apikey Use a different API key for this request.
+    # @option params [String] :host Use a different host for this request.
+    # @option params [String] :headers Use different headers for this request.
+    # @option params [Proc] :middleware Use different middleware for this request.
     # @return [Zerobounce::Response]
     def validate(params)
       if params.key?(:ipaddress) || params.key?(:ip_address)
@@ -53,10 +53,10 @@ module Zerobounce
     # Get the number of remaining credits on the account.
     #
     # @param [Hash] params
-    # @option params [String] :apikey
-    # @option params [String] :host
-    # @option params [String] :headers
-    # @option params [Proc] :middleware
+    # @option params [String] :apikey Use a different API key for this request.
+    # @option params [String] :host Use a different host for this request.
+    # @option params [String] :headers Use different headers for this request.
+    # @option params [Proc] :middleware Use different middleware for this request.
     # @return [Integer]
     def credits(params={})
       Request.new(params).credits(params)
@@ -65,9 +65,19 @@ module Zerobounce
     # Convenience method for checking if an email address is valid.
     #
     # @param [String] email
+    # @param [Hash] params
     # @return [Boolean]
-    def valid?(email)
-      validate(email: email).valid?
+    def valid?(email, params={})
+      validate(params.merge(email: email)).valid?
+    end
+
+    # Convenience method for checking if an email address is invalid.
+    #
+    # @param [String] email
+    # @param [Hash] params
+    # @return [Boolean]
+    def invalid?(email, params={})
+      validate(params.merge(email: email)).invalid?
     end
   end
 end

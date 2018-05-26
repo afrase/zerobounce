@@ -25,13 +25,22 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+# Configure the client
 Zerobounce.configure do |config|
   config.api_key = 'key'
+  config.valid_statuses = [:valid, :catch_all, :unknown]
 end
 
-Zerobounce.validate(email: 'example@example.com')
-resp = Zerobounce.validate(email: 'example@example.com', ip_address: '127.0.0.1')
+resp = Zerobounce.validate(email: 'valid@example.com')
 resp.valid? # => true
+
+# Change what is considered a valid status
+Zerobounce.valid?('invalid@example.com') # => false
+Zerobounce.config.valid_statuses = [:invalid]
+Zerobounce.valid?('invalid@example.com') # => true
+
+# Use a different API key for one request
+Zerobounce.validate(email: 'valid@example.com', apikey: 'different-api-key')
 ```
 
 ## Development
