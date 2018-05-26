@@ -32,12 +32,34 @@ module Zerobounce
       yield configuration
     end
 
-    # Validate an email address and/or IP address.
+    # Validates the email address and gets geoip information for an IP if provided.
     #
     # @param [Hash] params
+    # @option params [String] :email
+    # @option params [String] :ip_address An IP address. :ipaddress also works.
+    # @option params [String] :apikey
+    # @option params [String] :host
+    # @option params [String] :headers
+    # @option params [Proc] :middleware
     # @return [Zerobounce::Response]
     def validate(params)
-      Request.new(params).get(params)
+      if params.key?(:ipaddress) || params.key?(:ip_address)
+        Request.new(params).validate_with_ip(params)
+      else
+        Request.new(params).validate(params)
+      end
+    end
+
+    # Get the number of remaining credits on the account.
+    #
+    # @param [Hash] params
+    # @option params [String] :apikey
+    # @option params [String] :host
+    # @option params [String] :headers
+    # @option params [Proc] :middleware
+    # @return [Integer]
+    def credits(params={})
+      Request.new(params).credits(params)
     end
 
     # Convenience method for checking if an email address is valid.

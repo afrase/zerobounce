@@ -25,16 +25,24 @@ RSpec.describe Zerobounce do
   end
 
   describe '.validate' do
+    let(:request) { instance_spy(Zerobounce::Request) }
+
     before do
-      described_class.config.middleware = proc do |f|
-        f.adapter(:test) do |stub|
-          stub.get('/v1/validate') { |_| [200, {}, ''] }
-        end
-      end
+      allow(request).to receive(:validate)
+      allow(request).to receive(:validate_with_ip)
+      allow(Zerobounce::Request).to receive(:new).and_return(request)
     end
 
-    it 'returns a response' do
-      expect(described_class.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
+    it 'calls #validate on request' do
+      described_class.validate(email: 'user@example.com')
+      expect(request).to have_received(:validate).with(email: 'user@example.com')
+    end
+
+    context 'when given an ip address' do
+      it 'calls #validate_with_ip on request' do
+        described_class.validate(email: 'user@example.com', ip_address: '127.0.0.1')
+        expect(request).to have_received(:validate_with_ip).with(email: 'user@example.com', ip_address: '127.0.0.1')
+      end
     end
   end
 
@@ -45,12 +53,26 @@ RSpec.describe Zerobounce do
       allow(response).to receive(:valid?).and_return(true)
       req = instance_double(Zerobounce::Request)
       allow(Zerobounce::Request).to receive(:new).and_return(req)
-      allow(req).to receive(:get).and_return(response)
+      allow(req).to receive(:validate).and_return(response)
     end
 
     it 'calls #valid? on response' do
       described_class.valid?('user@example.com')
       expect(response).to have_received(:valid?)
+    end
+  end
+
+  describe '.credits' do
+    let(:request) { instance_spy(Zerobounce::Request) }
+
+    before do
+      allow(request).to receive(:credits)
+      allow(Zerobounce::Request).to receive(:new).and_return(request)
+    end
+
+    it 'calls #credits on request' do
+      described_class.credits
+      expect(request).to have_received(:credits)
     end
   end
 end
