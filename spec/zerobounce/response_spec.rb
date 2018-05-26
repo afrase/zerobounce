@@ -4,9 +4,7 @@ RSpec.describe Zerobounce::Response do
   let(:response) { spy }
 
   describe '#status' do
-    before do
-      allow(response).to receive(:body).and_return(status: 'DoNotMail')
-    end
+    before { allow(response).to receive(:body).and_return(status: 'DoNotMail') }
 
     it 'returns a symbol' do
       expect(described_class.new(response, nil).status).to be_a(Symbol)
@@ -18,9 +16,7 @@ RSpec.describe Zerobounce::Response do
   end
 
   describe '#sub_status' do
-    before do
-      allow(response).to receive(:body).and_return(sub_status: 'global_suppression')
-    end
+    before { allow(response).to receive(:body).and_return(sub_status: 'global_suppression') }
 
     it 'returns a symbol' do
       expect(described_class.new(response, nil).sub_status).to be_a(Symbol)
@@ -34,9 +30,7 @@ RSpec.describe Zerobounce::Response do
   end
 
   describe '#process_date' do
-    before do
-      allow(response).to receive(:body).and_return(processedat: Time.now.to_s)
-    end
+    before { allow(response).to receive(:body).and_return(processedat: Time.now.to_s) }
 
     it 'returns a time object' do
       expect(described_class.new(response, nil).process_date).to be_a(Time)
@@ -44,12 +38,20 @@ RSpec.describe Zerobounce::Response do
   end
 
   describe '#creation_date' do
-    before do
-      allow(response).to receive(:body).and_return(creationdate: Time.now.to_s)
-    end
+    before { allow(response).to receive(:body).and_return(creationdate: Time.now.to_s) }
 
     it 'returns a time object' do
       expect(described_class.new(response, nil).creation_date).to be_a(Time)
+    end
+  end
+
+  describe '#valid?' do
+    before { allow(response).to receive(:body).and_return(status: 'DoNotMail') }
+
+    it 'can change what a valid email is' do
+      expect { Zerobounce.config.valid_statuses = %i[do_not_mail] }.to(
+        change { described_class.new(response, nil).valid? }.from(false).to(true)
+      )
     end
   end
 
