@@ -37,4 +37,20 @@ RSpec.describe Zerobounce do
       expect(described_class.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
     end
   end
+
+  describe '.valid?' do
+    let(:response) { instance_spy(Zerobounce::Response) }
+
+    before do
+      allow(response).to receive(:valid?).and_return(true)
+      req = instance_double(Zerobounce::Request)
+      allow(Zerobounce::Request).to receive(:new).and_return(req)
+      allow(req).to receive(:get).and_return(response)
+    end
+
+    it 'calls #valid? on response' do
+      described_class.valid?('user@example.com')
+      expect(response).to have_received(:valid?)
+    end
+  end
 end

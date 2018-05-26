@@ -39,5 +39,13 @@ module Zerobounce
     def validate(params)
       Request.new(params).get(params)
     end
+
+    # Convenience method for checking if an email address is valid.
+    #
+    # @param [String] email
+    # @return [Boolean]
+    def valid?(email)
+      validate(email: email).valid?
+    end
   end
 end
