@@ -43,51 +43,48 @@ RSpec.describe Zerobounce::Request do
         expect(described_class.new.host).to be(Zerobounce.config.host)
       end
     end
+  end
 
-    context 'when ip_address in params' do
-      it 'uses the validate with ip path' do
-        expect(described_class.new(ip_address: '127.0.0.1').url).to be(described_class::VALIDATE_WITH_IP_PATH)
+  describe '#validate' do
+    before do
+      Zerobounce.config.middleware = proc do |f|
+        f.adapter(:test) do |stub|
+          stub.get(Zerobounce::Request::VALIDATE_PATH) { |_| [200, {}, ''] }
+        end
       end
     end
 
-    context 'when ipaddress in params' do
-      it 'uses the validate with ip path' do
-        expect(described_class.new(ipaddress: '127.0.0.1').url).to be(described_class::VALIDATE_WITH_IP_PATH)
-      end
-    end
-
-    context 'when ip address not in params' do
-      it 'uses the validate path' do
-        expect(described_class.new.url).to be(described_class::VALIDATE_PATH)
-      end
+    it 'returns a response' do
+      expect(described_class.new.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
     end
   end
 
-  describe '#get' do
-    let(:faraday_conn) { instance_spy(Faraday::Connection) }
-
+  describe '#validate_with_ip' do
     before do
-      allow(faraday_conn).to receive(:get).and_return(spy)
-      allow(Faraday).to receive(:new).and_return(faraday_conn)
-    end
-
-    it 'filters extra params' do
-      described_class.new.get(foo: 'foo', bar: 'bar')
-      expect(faraday_conn).to have_received(:get).with(String, apikey: nil)
-    end
-
-    context 'when given an apikey' do
-      it 'uses it instead of Zerobounce::Configuration#api_key' do
-        described_class.new.get(apikey: 'foo')
-        expect(faraday_conn).to have_received(:get).with(String, apikey: 'foo')
+      Zerobounce.config.middleware = proc do |f|
+        f.adapter(:test) do |stub|
+          stub.get(Zerobounce::Request::VALIDATE_WITH_IP_PATH) { |_| [200, {}, ''] }
+        end
       end
     end
 
-    context 'when given ip_address' do
-      it 'normalizes it to ipaddress' do
-        described_class.new.get(ip_address: '127.0.0.1')
-        expect(faraday_conn).to have_received(:get).with(String, apikey: nil, ipaddress: '127.0.0.1')
+    it 'returns a response' do
+      params = { email: 'user@example.com', ip_address: '127.0.0.1' }
+      expect(described_class.new.validate_with_ip(params)).to be_a(Zerobounce::Response)
+    end
+  end
+
+  describe '#credits' do
+    before do
+      Zerobounce.config.middleware = proc do |f|
+        f.adapter(:test) do |stub|
+          stub.get(Zerobounce::Request::GET_CREDITS_PATH) { |_| [200, {}, { Credits: '1' }] }
+        end
       end
+    end
+
+    it 'returns an integer' do
+      expect(described_class.new.credits).to be_an(Integer)
     end
   end
 end
