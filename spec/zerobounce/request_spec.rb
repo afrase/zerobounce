@@ -64,14 +64,30 @@ RSpec.describe Zerobounce::Request do
   end
 
   describe '#get' do
-    it 'filters extra params'
+    let(:faraday_conn) { instance_spy(Faraday::Connection) }
+
+    before do
+      allow(faraday_conn).to receive(:get).and_return(spy)
+      allow(Faraday).to receive(:new).and_return(faraday_conn)
+    end
+
+    it 'filters extra params' do
+      described_class.new.get(foo: 'foo', bar: 'bar')
+      expect(faraday_conn).to have_received(:get).with(String, apiKey: nil)
+    end
 
     context 'when given an apiKey' do
-      it 'uses it instead of Zerobounce::Configuration#api_key'
+      it 'uses it instead of Zerobounce::Configuration#api_key' do
+        described_class.new.get(apiKey: 'foo')
+        expect(faraday_conn).to have_received(:get).with(String, apiKey: 'foo')
+      end
     end
 
     context 'when given ip_address' do
-      it 'normalizes it to ipaddress'
+      it 'normalizes it to ipaddress' do
+        described_class.new.get(ip_address: '127.0.0.1')
+        expect(faraday_conn).to have_received(:get).with(String, apiKey: nil, ipaddress: '127.0.0.1')
+      end
     end
   end
 end

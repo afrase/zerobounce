@@ -7,7 +7,7 @@ RSpec.describe Zerobounce::Configuration do
     )
   end
 
-  describe '#api_key' do
+  describe '#api_key', mock_env: true do
     before { ENV['ZEROBOUNCE_API_KEY'] = 'foobar' }
 
     it 'uses the environment variable "ZEROBOUNCE_API_KEY" by default' do
