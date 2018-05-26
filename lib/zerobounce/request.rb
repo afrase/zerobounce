@@ -7,9 +7,6 @@ module Zerobounce
   #
   # @author Aaron Frase
   #
-  # @attr_reader [String] url
-  #   The path of the request.
-  #
   # @attr_reader [String] host
   #   The host to send the request to.
   #
@@ -65,6 +62,7 @@ module Zerobounce
     #
     # @param [Hash] params
     # @option params [String] :apikey
+    # @return [Integer] A value of -1 can mean the API is invalid.
     def credits(params={})
       get(GET_CREDITS_PATH, params).body[:Credits]&.to_i
     end
