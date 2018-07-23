@@ -49,7 +49,7 @@ RSpec.describe Zerobounce::Request do
     before do
       Zerobounce.config.middleware = proc do |f|
         f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::VALIDATE_PATH) { |_| [200, {}, ''] }
+          stub.get('/v1/validate') { |_| [200, {}, ''] }
         end
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe Zerobounce::Request do
     before do
       Zerobounce.config.middleware = proc do |f|
         f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::VALIDATE_WITH_IP_PATH) { |_| [200, {}, ''] }
+          stub.get('/v1/validatewithip') { |_| [200, {}, ''] }
         end
       end
     end
@@ -78,7 +78,7 @@ RSpec.describe Zerobounce::Request do
     before do
       Zerobounce.config.middleware = proc do |f|
         f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::GET_CREDITS_PATH) { |_| [200, {}, { Credits: '1' }] }
+          stub.get('/v1/getcredits') { |_| [200, {}, { Credits: '1' }] }
         end
       end
     end

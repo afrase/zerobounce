@@ -25,7 +25,7 @@ RSpec.describe Zerobounce do
   end
 
   describe '.validate' do
-    let(:request) { instance_spy(Zerobounce::Request) }
+    let(:request) { instance_spy(Zerobounce::Request::V1Request) }
 
     before do
       allow(request).to receive(:validate)
@@ -37,13 +37,6 @@ RSpec.describe Zerobounce do
       described_class.validate(email: 'user@example.com')
       expect(request).to have_received(:validate).with(email: 'user@example.com')
     end
-
-    context 'when given an ip address' do
-      it 'calls #validate_with_ip on request' do
-        described_class.validate(email: 'user@example.com', ip_address: '127.0.0.1')
-        expect(request).to have_received(:validate_with_ip).with(email: 'user@example.com', ip_address: '127.0.0.1')
-      end
-    end
   end
 
   describe '.valid?' do
@@ -51,7 +44,7 @@ RSpec.describe Zerobounce do
 
     before do
       allow(response).to receive(:valid?).and_return(true)
-      req = instance_double(Zerobounce::Request)
+      req = instance_double(Zerobounce::Request::V1Request)
       allow(Zerobounce::Request).to receive(:new).and_return(req)
       allow(req).to receive(:validate).and_return(response)
     end
@@ -67,7 +60,7 @@ RSpec.describe Zerobounce do
 
     before do
       allow(response).to receive(:invalid?).and_return(false)
-      req = instance_double(Zerobounce::Request)
+      req = instance_double(Zerobounce::Request::V1Request)
       allow(Zerobounce::Request).to receive(:new).and_return(req)
       allow(req).to receive(:validate).and_return(response)
     end
