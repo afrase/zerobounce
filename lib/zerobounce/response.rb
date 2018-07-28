@@ -125,7 +125,7 @@ module Zerobounce
     #
     # @return [String]
     def inspect
-      "#<#{self.class.name}:#{object_id}>"
+      "#<#{self.class.name}:0x#{object_id.to_s(16)} @address=#{address}>"
     end
 
     # Convert to a hash.

@@ -11,8 +11,12 @@ RSpec.describe Zerobounce::Response do
       expect(described_class.new(response, request).status).to be_a(Symbol)
     end
 
-    it 'converts camelcase to snakecase' do
-      expect(described_class.new(response, request).status).to eq(:do_not_mail)
+    describe 'API V1' do
+      before { Zerobounce.config.api_version = 'v1' }
+
+      it 'converts camelcase to snakecase' do
+        expect(described_class.new(response, request).status).to eq(:do_not_mail)
+      end
     end
   end
 
