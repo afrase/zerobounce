@@ -45,46 +45,88 @@ RSpec.describe Zerobounce::Request do
     end
   end
 
-  describe '#validate' do
-    before do
-      Zerobounce.config.middleware = proc do |f|
-        f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::VALIDATE_PATH) { |_| [200, {}, ''] }
+  describe 'API V1' do
+    before { Zerobounce.config.api_version = 'v1' }
+
+    describe '#validate_with_ip' do
+      before do
+        Zerobounce.config.middleware = proc do |f|
+          f.adapter(:test) { |stub| stub.get('/v1/validatewithip') { |_| [200, {}, ''] } }
+        end
+      end
+
+      it 'returns a response' do
+        params = { email: 'user@example.com', ip_address: '127.0.0.1' }
+        expect(described_class.new.validate_with_ip(params)).to be_a(Zerobounce::Response)
+      end
+    end
+
+    describe '#validate' do
+      context 'with ip_address' do
+        before do
+          Zerobounce.config.middleware = proc do |f|
+            f.adapter(:test) { |stub| stub.get('/v1/validatewithip') { |_| [200, {}, ''] } }
+          end
+        end
+
+        it 'returns a response' do
+          expect(described_class.new.validate(email: 'user@example.com', ip_address: '127.0.0.1')).to(
+            be_a(Zerobounce::Response)
+          )
+        end
+      end
+
+      context 'without ip_address' do
+        before do
+          Zerobounce.config.middleware = proc do |f|
+            f.adapter(:test) { |stub| stub.get('/v1/validate') { |_| [200, {}, {}] } }
+          end
+        end
+
+        it 'returns a response' do
+          expect(described_class.new.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
         end
       end
     end
 
-    it 'returns a response' do
-      expect(described_class.new.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
+    describe '#credits' do
+      before do
+        Zerobounce.config.middleware = proc do |f|
+          f.adapter(:test) { |stub| stub.get('/v1/getcredits') { |_| [200, {}, { Credits: '1' }] } }
+        end
+      end
+
+      it 'returns an integer' do
+        expect(described_class.new.credits).to be_an(Integer)
+      end
     end
   end
 
-  describe '#validate_with_ip' do
-    before do
-      Zerobounce.config.middleware = proc do |f|
-        f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::VALIDATE_WITH_IP_PATH) { |_| [200, {}, ''] }
+  describe 'API V2' do
+    before { Zerobounce.config.api_version = 'v2' }
+
+    describe '#validate' do
+      before do
+        Zerobounce.config.middleware = proc do |f|
+          f.adapter(:test) { |stub| stub.get('/v2/validate') { |_| [200, {}, ''] } }
         end
+      end
+
+      it 'returns a response' do
+        expect(described_class.new.validate(email: 'user@example.com')).to be_a(Zerobounce::Response)
       end
     end
 
-    it 'returns a response' do
-      params = { email: 'user@example.com', ip_address: '127.0.0.1' }
-      expect(described_class.new.validate_with_ip(params)).to be_a(Zerobounce::Response)
-    end
-  end
-
-  describe '#credits' do
-    before do
-      Zerobounce.config.middleware = proc do |f|
-        f.adapter(:test) do |stub|
-          stub.get(Zerobounce::Request::GET_CREDITS_PATH) { |_| [200, {}, { Credits: '1' }] }
+    describe '#credits' do
+      before do
+        Zerobounce.config.middleware = proc do |f|
+          f.adapter(:test) { |stub| stub.get('/v2/getcredits') { |_| [200, {}, { Credits: '1' }] } }
         end
       end
-    end
 
-    it 'returns an integer' do
-      expect(described_class.new.credits).to be_an(Integer)
+      it 'returns an integer' do
+        expect(described_class.new.credits).to be_an(Integer)
+      end
     end
   end
 end

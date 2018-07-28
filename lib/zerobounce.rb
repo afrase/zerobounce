@@ -43,11 +43,7 @@ module Zerobounce
     # @option params [Proc] :middleware Use different middleware for this request.
     # @return [Zerobounce::Response]
     def validate(params)
-      if params.key?(:ipaddress) || params.key?(:ip_address)
-        Request.new(params).validate_with_ip(params)
-      else
-        Request.new(params).validate(params)
-      end
+      Request.new(params).validate(params)
     end
 
     # Get the number of remaining credits on the account.
