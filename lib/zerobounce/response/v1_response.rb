@@ -17,7 +17,7 @@ module Zerobounce
       #
       # @return [Symbol] The status as a +Symbol+.
       def status
-        @status ||= underscore(@body[:status])&.to_sym
+        @status ||= @body[:status].to_s.empty? ? nil : underscore(@body[:status]).to_sym
       end
 
       # A more detailed status
@@ -43,10 +43,11 @@ module Zerobounce
       #   :leading_period_removed
       #   :does_not_accept_mail
       #   :alias_address
+      #   :unknown
       #
       # @return [Symbol] The sub_status as a +Symbol+.
       def sub_status
-        @sub_status ||= underscore(@body[:sub_status])&.to_sym
+        @sub_status ||= @body[:sub_status].to_s.empty? ? nil : underscore(@body[:sub_status]).to_sym
       end
 
       # If the email domain is disposable, which are usually temporary email addresses.
@@ -81,23 +82,21 @@ module Zerobounce
       #
       # @return [Time, nil]
       def processed_at
-        @processed_at ||= @body[:processedat] && Time.parse(@body[:processedat])
+        @processed_at ||= @body[:processedat] && Time.parse("#{@body[:processedat]} UTC")
       end
 
       # The creation date of the email when available.
       #
       # @return [Time, nil]
       def creation_date
-        @creation_date ||= @body[:creationdate] && Time.parse(@body[:creationdate])
+        @creation_date ||= @body[:creationdate] && Time.parse("#{@body[:creationdate]} UTC")
       end
 
       private
 
-      # @param [String, nil] word
-      # @return [String, nil]
+      # @param [String] word
+      # @return [String]
       def underscore(word)
-        return if word.nil? || word.empty?
-
         word.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase.tr('-', '_')
       end
     end

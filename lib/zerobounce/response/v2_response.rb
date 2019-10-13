@@ -6,7 +6,7 @@ module Zerobounce
     module V2Response
       # Deliverability status
       #
-      # @see https://docs.zerobounce.net/docs/status-codes-v2
+      # @see https://www.zerobounce.net/docs/email-validation-api-quickstart/#status_codes__v2__
       #
       # Possible values:
       #   :valid
@@ -19,12 +19,12 @@ module Zerobounce
       #
       # @return [Symbol] The status as a +Symbol+.
       def status
-        @status ||= @body[:status]&.tr('-', '_')&.to_sym
+        @status ||= @body[:status].to_s.empty? ? nil : @body[:status].tr('-', '_').to_sym
       end
 
       # @return [Symbol, nil]
       def sub_status
-        @sub_status ||= @body[:sub_status] == '' ? nil : @body[:sub_status]&.to_sym
+        @sub_status ||= @body[:sub_status].to_s.empty? ? nil : @body[:sub_status].to_sym
       end
 
       # @return [Integer]
@@ -55,7 +55,7 @@ module Zerobounce
       #
       # @return [Time, nil]
       def processed_at
-        @processed_at ||= @body[:processed_at] && Time.parse(@body[:processed_at])
+        @processed_at ||= @body[:processed_at] && Time.parse("#{@body[:processed_at]} UTC")
       end
 
       # If the email comes from a free provider.

@@ -50,7 +50,7 @@ module Zerobounce
     # @option params [String] :apikey
     # @return [Integer] A value of -1 can mean the API is invalid.
     def credits(params={})
-      get('getcredits', params).body[:Credits]&.to_i
+      get('getcredits', params).body[:Credits].to_i
     end
 
     private
