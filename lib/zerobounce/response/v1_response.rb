@@ -97,6 +97,7 @@ module Zerobounce
       # @return [String, nil]
       def underscore(word)
         return if word.nil? || word.empty?
+
         word.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase.tr('-', '_')
       end
     end

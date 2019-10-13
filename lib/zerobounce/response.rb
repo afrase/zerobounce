@@ -19,7 +19,7 @@ module Zerobounce
     attr_reader :request
 
     # @param [Faraday::Response] response
-    # @param [Zerobounce::Request] request
+    # @param [Zerobounce::Request::V2Response, Zerobounce::Request::V1Response] request
     def initialize(response, request)
       @response = response
       @request = request
@@ -134,6 +134,7 @@ module Zerobounce
     def to_h
       public_methods(false).each_with_object({}) do |meth, memo|
         next if %i[request response inspect to_h].include?(meth)
+
         memo[meth] = send(meth)
       end
     end
