@@ -34,6 +34,6 @@ Gem::Specification.new do |spec| # rubocop:disable BlockLength
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.4.1'
   spec.add_development_dependency 'rubocop', '~> 0.52'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.22', '>= 1.22.2'
-  spec.add_development_dependency 'simplecov', '~> 0.17.1'
+  spec.add_development_dependency 'simplecov', '~> 0.18.1'
   spec.add_development_dependency 'yard', '~> 0.9.12'
 end
