@@ -14,7 +14,7 @@ module Zerobounce
       # @param [Hash] env
       # @raise [Error]
       def on_complete(env)
-        if (error = Zerobounce::Error.from_response(env)) # rubocop:disable GuardClause
+        if (error = Zerobounce::Error.from_response(env)) # rubocop:disable Style/GuardClause
           raise error
         end
       end
