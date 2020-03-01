@@ -26,7 +26,8 @@ RSpec.describe Zerobounce::Error do
       end
 
       context 'when body looks like an error' do
-        before { env[:body] = '{"error":"Invalid API Key or your account ran out of credits"}' }
+        # The Zerobounce body contains a space after the `:`
+        before { env[:body] = '{"error": "Invalid API Key or your account ran out of credits"}' }
 
         it 'returns ApiError' do
           expect(described_class.from_response(env)).to be_a(Zerobounce::ApiError)
