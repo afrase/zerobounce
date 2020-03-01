@@ -4,7 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zerobounce/version'
 
-Gem::Specification.new do |spec| # rubocop:disable BlockLength
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = 'zerobounce'
   spec.version       = Zerobounce::VERSION
   spec.authors       = ['Aaron Frase']

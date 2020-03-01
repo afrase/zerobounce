@@ -49,7 +49,7 @@ module Zerobounce
       def parse_200(env)
         # The body hasn't been parsed yet and to avoid potentially parsing the body twice
         # we just use String#start_with?
-        ApiError.new(env) if env[:body].to_s.start_with?('{"error":"')
+        ApiError.new(env) if env[:body].to_s.start_with?('{"error":')
       end
     end
   end
