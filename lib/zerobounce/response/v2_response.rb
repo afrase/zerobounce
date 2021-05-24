@@ -17,7 +17,7 @@ module Zerobounce
       #   :abuse
       #   :do_not_mail
       #
-      # @return [Symbol] The status as a +Symbol+.
+      # @return [Symbol, nil] The status as a +Symbol+.
       def status
         @status ||= @body[:status].to_s.empty? ? nil : @body[:status].tr('-', '_').to_sym
       end

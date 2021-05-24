@@ -7,28 +7,26 @@ module Zerobounce
   #
   # @author Aaron Frase
   class Error < StandardError
+    attr_reader :env
+
     def initialize(env={})
       @env = env
-    end
-
-    # Message for the error.
-    #
-    # @return [String]
-    def message
-      @env[:body]
+      super(env[:body])
     end
 
     class << self
       # Parse the response for errors.
       #
       # @param [Hash] env
-      # @return [Error]
+      # @return [Error, nil]
       def from_response(env)
         case env[:status]
         when 500
-          parse_500(env)
+          parse500(env)
         when 200
-          parse_200(env)
+          parse200(env)
+        else
+          UnknownError.new(env)
         end
       end
 
@@ -36,7 +34,7 @@ module Zerobounce
 
       # @param [Hash] env
       # @return [Error]
-      def parse_500(env)
+      def parse500(env)
         if env[:body].to_s.start_with?('Missing parameter')
           MissingParameter.new(env)
         else
@@ -46,7 +44,7 @@ module Zerobounce
 
       # @param [Hash] env
       # @return [Error, nil]
-      def parse_200(env)
+      def parse200(env)
         # The body hasn't been parsed yet and to avoid potentially parsing the body twice
         # we just use String#start_with?
         ApiError.new(env) if env[:body].to_s.start_with?('{"error":')
@@ -64,6 +62,12 @@ module Zerobounce
   #
   # @author Aaron Frase
   class MissingParameter < Error
+  end
+
+  # When the status code isn't in the defined codes to parse.
+  #
+  # @author Aaron Frase
+  class UnknownError < Error
   end
 
   # General API error, the response code was 200 but an error still occurred.

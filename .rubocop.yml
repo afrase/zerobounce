@@ -1,7 +1,8 @@
 require: rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
+  NewCops: enable
 
   Exclude:
     - 'bin/*'
@@ -16,7 +17,7 @@ Style/Documentation:
 Metrics/AbcSize:
   Max: 18
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
@@ -36,3 +37,6 @@ Style/SymbolArray:
 
 RSpec/NestedGroups:
   Max: 5
+
+Style/AccessorGrouping:
+  EnforcedStyle: separated

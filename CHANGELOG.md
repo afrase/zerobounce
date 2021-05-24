@@ -1,3 +1,9 @@
+# 0.2.0
+
+* Update faraday and faraday_middleware dependency requirements.
+* Update rubocop dev dependencies and fixed failures.
+* Updated minimum ruby version to 2.5.
+
 # 0.1.2
 
 * Removed the double quote from the body check since it appears a space is added after the colon.
