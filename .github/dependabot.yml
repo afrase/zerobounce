@@ -3,14 +3,8 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
     time: "10:00"
   open-pull-requests-limit: 10
   reviewers:
   - afrase
-  ignore:
-  - dependency-name: rubocop
-    versions:
-    - 1.10.0
-    - 1.11.0
-    - 1.9.0
