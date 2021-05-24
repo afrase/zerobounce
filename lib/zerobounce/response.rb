@@ -13,7 +13,7 @@ module Zerobounce
   #   The request instance.
   #
   # @attr_reader [Faraday::Response] response
-  #   The original {https://www.rubydoc.info/gems/faraday/0.15.2/Faraday/Response Faraday::Response}
+  #   The original {https://www.rubydoc.info/gems/faraday/1.4.2/Faraday/Response Faraday::Response}
   class Response
     attr_reader :response
     attr_reader :request

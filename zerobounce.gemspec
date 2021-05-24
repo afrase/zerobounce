@@ -24,16 +24,20 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
 
   spec.metadata['yard.run'] = 'yri' # use "yard" to build full HTML docs.
 
-  spec.add_dependency 'faraday', '>= 0.14', '< 2.0'
-  spec.add_dependency 'faraday_middleware', '>= 0.12', '< 2.0'
+  spec.required_ruby_version = '>= 2.5'
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
-  spec.add_development_dependency 'pry', '~> 0.13.0'
+  spec.add_dependency 'faraday', '>= 0.14', '< 2.0'
+  spec.add_dependency 'faraday_middleware', '~> 1.0'
+
+  spec.add_development_dependency 'bundler', '~> 2.2.17'
+  spec.add_development_dependency 'pry', '~> 0.14.1'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec_junit_formatter', '~> 0.4.1'
-  spec.add_development_dependency 'rubocop', '~> 0.52'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.22', '>= 1.22.2'
-  spec.add_development_dependency 'simplecov', '~> 0.17.1'
-  spec.add_development_dependency 'yard', '~> 0.9.12'
+  spec.add_development_dependency 'rubocop', '~> 1.15'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.11', '>= 1.11.3'
+  spec.add_development_dependency 'rubocop-rake', '~> 0.5.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
+  spec.add_development_dependency 'simplecov', '~> 0.21.2'
+  spec.add_development_dependency 'yard', '~> 0.9.26'
 end
