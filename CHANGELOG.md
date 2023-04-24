@@ -1,3 +1,7 @@
+# 0.3.1
+
+-   Updated minimum ruby version to 3.0
+
 # 0.3.0
 
 -   Updated faraday to version 2.0.1
