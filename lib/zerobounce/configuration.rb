@@ -38,7 +38,7 @@ module Zerobounce
 
     def initialize
       self.host = 'https://api.zerobounce.net'
-      self.apikey = ENV['ZEROBOUNCE_API_KEY']
+      self.apikey = ENV.fetch('ZEROBOUNCE_API_KEY')
       self.api_version = 'v2'
       self.valid_statuses = %i[valid catch_all]
       self.headers = { user_agent: "ZerobounceRubyGem/#{Zerobounce::VERSION}" }
