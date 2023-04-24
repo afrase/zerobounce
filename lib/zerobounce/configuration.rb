@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
-require 'faraday_middleware'
-require 'zerobounce/middleware/raise_error'
+require 'zerobounce/middleware/raise_http_exception'
 
 module Zerobounce
   # Configuration object for Zerobounce.
@@ -39,7 +38,7 @@ module Zerobounce
 
     def initialize
       self.host = 'https://api.zerobounce.net'
-      self.apikey = ENV['ZEROBOUNCE_API_KEY']
+      self.apikey = ENV.fetch('ZEROBOUNCE_API_KEY', nil)
       self.api_version = 'v2'
       self.valid_statuses = %i[valid catch_all]
       self.headers = { user_agent: "ZerobounceRubyGem/#{Zerobounce::VERSION}" }
@@ -47,7 +46,7 @@ module Zerobounce
       self.middleware = proc do |builder|
         builder.response(:json, content_type: /\bjson$/, parser_options: { symbolize_names: true })
         builder.response(:logger) { |l| l.filter(/(api_?key=)(\w+)/, '\1[REMOVED]') } if ENV['ZEROBOUNCE_API_DEBUG']
-        builder.use(Zerobounce::Middleware::RaiseError)
+        builder.use(Zerobounce::Middleware::RaiseHttpException)
         builder.adapter(Faraday.default_adapter)
       end
     end
