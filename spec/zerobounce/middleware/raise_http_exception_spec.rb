@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Zerobounce::Middleware::RaiseError do
+RSpec.describe Zerobounce::Middleware::RaiseHttpException do
   describe '#on_complete' do
     context 'when response contains an error' do
       let(:env) { { status: 500 } }

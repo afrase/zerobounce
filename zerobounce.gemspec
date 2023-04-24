@@ -4,7 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zerobounce/version'
 
-Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
+Gem::Specification.new do |spec|
   spec.name          = 'zerobounce'
   spec.version       = Zerobounce::VERSION
   spec.authors       = ['Aaron Frase']
@@ -24,12 +24,11 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
 
   spec.metadata['yard.run'] = 'yri' # use "yard" to build full HTML docs.
 
-  spec.required_ruby_version = '>= 2.5'
+  spec.required_ruby_version = '>= 2.6'
 
-  spec.add_dependency 'faraday', '>= 0.14', '< 2.0'
-  spec.add_dependency 'faraday_middleware', '~> 1.0'
+  spec.add_dependency 'faraday', '>= 2.0.1'
 
-  spec.add_development_dependency 'bundler', '~> 2.2.17'
+  spec.add_development_dependency 'bundler', '>= 2.2.17'
   spec.add_development_dependency 'pry', '~> 0.14.1'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
@@ -40,4 +39,5 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
   spec.add_development_dependency 'simplecov', '~> 0.21.2'
   spec.add_development_dependency 'yard', '~> 0.9.26'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

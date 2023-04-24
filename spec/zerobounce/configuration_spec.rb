@@ -29,9 +29,9 @@ RSpec.describe Zerobounce::Configuration do
       expect(builder).to have_received(:response).with(:json, Hash)
     end
 
-    it 'uses the RaiseError class' do
+    it 'uses the RaiseHttpException class' do
       described_class.new.middleware.call(builder)
-      expect(builder).to have_received(:use).with(Zerobounce::Middleware::RaiseError)
+      expect(builder).to have_received(:use).with(Zerobounce::Middleware::RaiseHttpException)
     end
 
     it 'uses Faraday default adapter' do
